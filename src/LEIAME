@@ -8,8 +8,8 @@ Processos:
     - Encontrado o número mágico deverá ser enviado ao master para cadastro e assinatura (ver processo 4);
 
 3) Descoberta do Master:
-    - Enviar uma mensagem do tipo DISCOVER em broadcast na rede interna (Datagrama UDP).
-    - Aguardar uma mensagem DISCOVER_RESPONSE onde master seja = true.
+    - Enviar uma mensagem do tipo DISCOVER em broadcast na rede interna (Datagrama UDP) pela porta 3333.
+    - Aguardar uma mensagem DISCOVER_RESPONSE na porta 3333 onde master seja = true.
     - Conferir a assinatura digital da mensagem (chave pública do servidor deverá estar armazenada em disco).
     - Armazenar o endereço IP e porta do servidor para comunicações seguras.
     - enviar mensagens do tipo DISCOVER a cada 15s;

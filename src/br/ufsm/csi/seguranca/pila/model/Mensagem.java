@@ -1,5 +1,6 @@
 package br.ufsm.csi.seguranca.pila.model;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.security.PublicKey;
 
@@ -7,7 +8,7 @@ import java.security.PublicKey;
 /**
  * Created by cpol on 17/04/2018.
  */
-public class Mensagem {
+public class Mensagem implements Serializable {
 
     private String idOrigem;
     private TipoMensagem tipo;
@@ -25,7 +26,7 @@ public class Mensagem {
         this.chavePublica = chavePublica;
     }
 
-    enum TipoMensagem { DISCOVER, DISCOVER_RESP, PILA_TRANSF }
+    public enum TipoMensagem { DISCOVER, DISCOVER_RESP, PILA_TRANSF }
 
     public String getIdOrigem() {
         return idOrigem;

@@ -17,6 +17,15 @@ public class Mensagem implements Serializable {
     private int porta;
     private PublicKey chavePublica;
     private byte[] assinatura;
+    private String erro;
+
+    public String getErro() {
+        return erro;
+    }
+
+    public void setErro(String erro) {
+        this.erro = erro;
+    }
 
     public PublicKey getChavePublica() {
         return chavePublica;
@@ -26,7 +35,7 @@ public class Mensagem implements Serializable {
         this.chavePublica = chavePublica;
     }
 
-    public enum TipoMensagem { DISCOVER, DISCOVER_RESP, PILA_TRANSF }
+    public enum TipoMensagem { DISCOVER, DISCOVER_RESP, PILA_TRANSF, ERRO }
 
     public String getIdOrigem() {
         return idOrigem;

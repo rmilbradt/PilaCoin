@@ -10,6 +10,9 @@ import java.security.PublicKey;
  */
 public class Mensagem implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+
     private String idOrigem;
     private TipoMensagem tipo;
     private boolean master;

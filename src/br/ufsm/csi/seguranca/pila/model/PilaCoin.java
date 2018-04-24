@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class PilaCoin implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String idCriador;
     private Date dataCriacao;
     private PublicKey chaveCriador;

@@ -8,6 +8,8 @@ import java.security.PublicKey;
  */
 public class ObjetoTroca implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private PublicKey chavePublica;
     private byte[] chaveSessao;
     private byte[] objetoSerializadoCriptografado;

@@ -8,6 +8,8 @@ import java.util.Date;
  */
 public class Transacao implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String idNovoDono;
     private Date dataTransacao;
     private byte[] assinaturaDono;

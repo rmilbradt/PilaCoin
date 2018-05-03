@@ -21,6 +21,15 @@ public class Mensagem implements Serializable {
     private PublicKey chavePublica;
     private byte[] assinatura;
     private String erro;
+    private PilaCoin pilaCoin;
+
+    public PilaCoin getPilaCoin() {
+        return pilaCoin;
+    }
+
+    public void setPilaCoin(PilaCoin pilaCoin) {
+        this.pilaCoin = pilaCoin;
+    }
 
     public String getErro() {
         return erro;

@@ -5,7 +5,7 @@ Processos:
 2) Mineração de PilaCoin:
     - Instanciar a classe PilaCoin e atribuir valores aos atributos: dataCriacao, idCriador, chaveCriador (ch. pública do criador);
     - Dados os valores anteriores atribuir um número mágico que torne o hash (SHA-256) do objeto serializado, um número
-    qualquer menor do que 9999999800000000000000000000000000000000000000000000000000000000000000.
+    qualquer menor do que 99999998000000000000000000000000000000000000000000000000000000000000000.
     - Encontrado o número mágico deverá ser enviado ao master para cadastro e assinatura (ver processo 4);
 
 3) Descoberta do Master:

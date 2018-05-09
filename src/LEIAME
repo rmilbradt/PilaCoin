@@ -29,7 +29,5 @@ Processos:
 6) Transferência de PilaCoin:
     - Pegar um PilaCoin que é seu e criar uma nova transação, indicando a data e o id do novo dono.
     - Assinar a transação com a sua chave privada.
-    - Adicionar a nova transação ao PilaCoin, serializá-lo e divulgá-lo como uma mensagem do tipo PILA_TRANSF em broadcast.
+    - Adicionar a nova transação ao PilaCoin, e divulgá-lo como uma mensagem do tipo PILA_TRANSF em broadcast.
 
-7) Validação de Pilas já transferidos:
-    - Validar um Pila recebido em uma mensagem PILA_TRANSF.

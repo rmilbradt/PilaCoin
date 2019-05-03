@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PilaCoin:jar">
+    <output-path>$PROJECT_DIR$/../bin</output-path>
+    <root id="archive" name="PilaCoin.jar">
+      <element id="module-output" name="PilaCoin" />
+    </root>
+  </artifact>
+</component>

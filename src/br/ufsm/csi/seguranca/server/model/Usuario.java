@@ -11,6 +11,33 @@ public class Usuario {
     private String id;
     private PublicKey chavePublica;
     private InetAddress endereco;
+    private boolean msgDiscoverOk;
+    private boolean validacaoPilaOk;
+    private boolean pilaTransfOk;
+
+    public boolean isMsgDiscoverOk() {
+        return msgDiscoverOk;
+    }
+
+    public void setMsgDiscoverOk(boolean msgDiscoverOk) {
+        this.msgDiscoverOk = msgDiscoverOk;
+    }
+
+    public boolean isValidacaoPilaOk() {
+        return validacaoPilaOk;
+    }
+
+    public void setValidacaoPilaOk(boolean validacaoPilaOk) {
+        this.validacaoPilaOk = validacaoPilaOk;
+    }
+
+    public boolean isPilaTransfOk() {
+        return pilaTransfOk;
+    }
+
+    public void setPilaTransfOk(boolean pilaTransfOk) {
+        this.pilaTransfOk = pilaTransfOk;
+    }
 
     public String getId() {
         return id;

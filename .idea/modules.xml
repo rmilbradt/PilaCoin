@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DHTModule/DHTModule.iml" filepath="$PROJECT_DIR$/DHTModule/DHTModule.iml" />
       <module fileurl="file://$PROJECT_DIR$/PilaCoin.iml" filepath="$PROJECT_DIR$/PilaCoin.iml" />
     </modules>
   </component>

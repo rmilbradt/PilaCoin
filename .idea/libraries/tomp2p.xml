@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="tomp2p">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/gcm-server-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/json-simple-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mapdb-1.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netty-buffer-4.0.28.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netty-common-4.0.28.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netty-transport-4.0.28.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-android-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-core-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-dht-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-nat-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-replication-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-storage-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tomp2p-tracker-5.0-Beta8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/weupnp-0.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

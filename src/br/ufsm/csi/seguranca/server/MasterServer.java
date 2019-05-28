@@ -8,12 +8,15 @@ import br.ufsm.csi.seguranca.pilacoin.PilaDHTServer;
 import br.ufsm.csi.seguranca.server.model.Usuario;
 import br.ufsm.csi.seguranca.util.RSAUtil;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.*;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.util.*;
 
@@ -82,8 +85,39 @@ public class MasterServer {
                         MessageDigest digest = MessageDigest.getInstance("SHA-256");
                         byte[] hashPila = digest.digest(bPila);
                         Cipher cipherRSA = Cipher.getInstance("RSA");
-                        cipherRSA.init(Cipher.DECRYPT_MODE, usuario.getChavePublica());
-                        byte[] hashAssinatura = cipherRSA.doFinal(objetoTroca.getAssinatura());
+                        try {
+                            cipherRSA.init(Cipher.DECRYPT_MODE, usuario.getChavePublica());
+                        } catch (InvalidKeyException e) {
+                            e.printStackTrace();
+                            Mensagem resposta = new Mensagem();
+                            resposta.setTipo(Mensagem.TipoMensagem.ERRO);
+                            resposta.setChavePublica(RSAUtil.getMasterPublicKey());
+                            resposta.setEndereco(getLocalHost());
+                            resposta.setPorta(4444);
+                            resposta.setMaster(true);
+                            resposta.setErro("[TCP Server] Pila inválido: usuário sem chave pública registrada. ");
+                            assinaMensagem(resposta);
+                            out.writeObject(resposta);
+                            s.close();
+                            throw e;
+                        }
+                        byte[] hashAssinatura = new byte[0];
+                        try {
+                            hashAssinatura = cipherRSA.doFinal(objetoTroca.getAssinatura());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Mensagem resposta = new Mensagem();
+                            resposta.setTipo(Mensagem.TipoMensagem.ERRO);
+                            resposta.setChavePublica(RSAUtil.getMasterPublicKey());
+                            resposta.setEndereco(getLocalHost());
+                            resposta.setPorta(4444);
+                            resposta.setMaster(true);
+                            resposta.setErro("[TCP Server] Pila inválido: assinatura do objetotroca inválida.");
+                            assinaMensagem(resposta);
+                            out.writeObject(resposta);
+                            s.close();
+                            throw e;
+                        }
                         if (Arrays.equals(hashPila, hashAssinatura)) {
                             PilaCoin pilaCoin = (PilaCoin) deserializaObjeto(bPila);
                             String msgErro;
@@ -159,7 +193,7 @@ public class MasterServer {
         if (usuario != null) {
             if (usuario.getChavePublica().equals(pilaCoin.getChaveCriador())) {
                 BigInteger bigInteger = new BigInteger(1, hashPila);
-                if (bigInteger.compareTo(new BigInteger("99999998000000000000000000000000000000000000000000000000000000000000000")) < 0) {
+                if (bigInteger.compareTo(new BigInteger("99999998000000000000000000000000000000000000000000000000000000000000000000")) < 0) {
                     usuario.setValidacaoPilaOk(true);
                     return null;
                 } else {

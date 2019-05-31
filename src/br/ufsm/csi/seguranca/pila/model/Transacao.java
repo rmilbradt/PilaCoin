@@ -1,6 +1,7 @@
 package br.ufsm.csi.seguranca.pila.model;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 import java.util.Date;
 
 /**
@@ -8,11 +9,20 @@ import java.util.Date;
  */
 public class Transacao implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private String idNovoDono;
+    private PublicKey chaveNovoDono;
     private Date dataTransacao;
     private byte[] assinaturaDono;
+
+    public PublicKey getChaveNovoDono() {
+        return chaveNovoDono;
+    }
+
+    public void setChaveNovoDono(PublicKey chaveNovoDono) {
+        this.chaveNovoDono = chaveNovoDono;
+    }
 
     public String getIdNovoDono() {
         return idNovoDono;

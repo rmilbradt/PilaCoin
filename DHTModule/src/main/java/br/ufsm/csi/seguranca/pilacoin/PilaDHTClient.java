@@ -46,11 +46,5 @@ public class PilaDHTClient {
         System.out.println("[SERVER] Publicou novo pila " + pilaCoin.getId() + ".");
     }
 
-    public void publicaTransacao(Transacao transacao, PilaCoin pilaCoin) {
-        if (transacao != null && pilaCoin != null && pilaCoin.getId() != null && pilaCoin.getAssinaturaMaster() != null) {
-
-        }
-    }
-
 
 }

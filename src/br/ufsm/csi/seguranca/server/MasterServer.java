@@ -5,12 +5,10 @@ import br.ufsm.csi.seguranca.pila.model.MensagemFragmentada;
 import br.ufsm.csi.seguranca.pila.model.ObjetoTroca;
 import br.ufsm.csi.seguranca.pila.model.PilaCoin;
 import br.ufsm.csi.seguranca.pilacoin.PilaDHTServer;
-import br.ufsm.csi.seguranca.server.model.Usuario;
+import br.ufsm.csi.seguranca.server.model.UsuarioServer;
 import br.ufsm.csi.seguranca.util.RSAUtil;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
@@ -31,7 +29,7 @@ public class MasterServer {
         return ++ID_PILA;
     }
 
-    private Map<InetAddress, Usuario> usuarios = new HashMap<>();
+    private Map<InetAddress, UsuarioServer> usuarios = new HashMap<>();
     private Map<Long, PilaCoin> pilas = new HashMap<>();
     private PilaDHTServer pilaDHTServer = new PilaDHTServer();
 
@@ -62,7 +60,7 @@ public class MasterServer {
                         SecretKey chaveSessao = decifraChaveSessao(objetoTroca.getChaveSessao());
                         Cipher cipherAES = Cipher.getInstance("AES");
                         cipherAES.init(Cipher.DECRYPT_MODE, chaveSessao);
-                        Usuario usuario = null;
+                        UsuarioServer usuario = null;
                         synchronized (MasterServer.this) {
                             usuario = usuarios.get(s.getInetAddress());
                         }
@@ -183,7 +181,7 @@ public class MasterServer {
     }
 
     private String validaPilaCriado(byte[] hashPila, PilaCoin pilaCoin, InetAddress endereco) {
-        Usuario usuario = null;
+        UsuarioServer usuario = null;
         synchronized (MasterServer.this) {
             usuario = usuarios.get(endereco);
         }
@@ -246,11 +244,11 @@ public class MasterServer {
                 String s = scanner.nextLine();
                 if (s != null && s.trim().contains("s")) {
                     System.out.println("USUÁRIO\t|\tENDERECO\t\t|\tDISCOVER\t|\tVALID. PILA\t|\tPILA_TRANSF");
-                    Collection<Usuario> cusuarios = null;
+                    Collection<UsuarioServer> cusuarios = null;
                     synchronized (MasterServer.this) {
                         cusuarios = usuarios.values();
                     }
-                    for (Usuario usuario : cusuarios) {
+                    for (UsuarioServer usuario : cusuarios) {
                         System.out.print(usuario.getId());
                         System.out.print("\t|\t");
                         System.out.print(usuario.getEndereco());
@@ -303,7 +301,7 @@ public class MasterServer {
                         }
                         synchronized (MasterServer.this) {
                             if (msgFragmentada != null) {
-                                Usuario u = usuarios.get(receivePacket.getAddress());
+                                UsuarioServer u = usuarios.get(receivePacket.getAddress());
                                 if (u != null) {
                                     u.setPilaTransfOk(true);
                                 }
@@ -311,9 +309,9 @@ public class MasterServer {
                                 System.out.println("[UDP Server] Recebido pacote tipo " + mensagem.getTipo() + " de " +
                                         receivePacket.getAddress() + " (id = " + mensagem.getIdOrigem() + ") .");
                                 if (mensagem.getTipo() == Mensagem.TipoMensagem.DISCOVER) {
-                                    Usuario usuario = usuarios.get(receivePacket.getAddress());
+                                    UsuarioServer usuario = usuarios.get(receivePacket.getAddress());
                                     if (usuario == null) {
-                                        usuario = new Usuario();
+                                        usuario = new UsuarioServer();
                                         usuario.setEndereco(receivePacket.getAddress());
                                         usuarios.put(usuario.getEndereco(), usuario);
                                     }
@@ -335,7 +333,7 @@ public class MasterServer {
                                     serverSocket.send(sendPacket);
                                     System.out.println("[UDP Server] Enviado " + resposta.getTipo() + " para " + receivePacket.getAddress() + ".");
                                 } else if (mensagem.getTipo() == Mensagem.TipoMensagem.PILA_TRANSF) {
-                                    Usuario u = usuarios.get(receivePacket.getAddress());
+                                    UsuarioServer u = usuarios.get(receivePacket.getAddress());
                                     if (u != null && mensagem.getPilaCoin() != null && mensagem.getPilaCoin().getTransacoes() != null &&
                                             !mensagem.getPilaCoin().getTransacoes().isEmpty()) {
                                         u.setPilaTransfOk(true);

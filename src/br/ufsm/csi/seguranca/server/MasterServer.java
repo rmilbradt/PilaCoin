@@ -191,7 +191,7 @@ public class MasterServer {
         if (usuario != null) {
             if (usuario.getChavePublica().equals(pilaCoin.getChaveCriador())) {
                 BigInteger bigInteger = new BigInteger(1, hashPila);
-                if (bigInteger.compareTo(new BigInteger("99999998000000000000000000000000000000000000000000000000000000000000000000")) < 0) {
+                if (bigInteger.compareTo(new BigInteger("99999998000000000000000000000000000000000000000000000000000000000000000")) < 0) {
                     usuario.setValidacaoPilaOk(true);
                     return null;
                 } else {

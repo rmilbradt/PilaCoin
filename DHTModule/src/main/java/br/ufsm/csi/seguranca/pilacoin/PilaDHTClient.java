@@ -41,7 +41,7 @@ public class PilaDHTClient {
         futureGet.awaitUninterruptibly();
         if (futureGet.isSuccess() && !futureGet.dataMap().values().isEmpty()) {
             System.out.println("[CLIENTE] chave=" + futureGet.dataMap().values().iterator().next().object().toString());
-            return (UsuarioServer) futureGet.dataMap().values().iterator().next().object();
+            return (Usuario) futureGet.dataMap().values().iterator().next().object();
         }
         return null;
     }

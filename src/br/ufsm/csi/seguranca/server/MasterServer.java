@@ -123,7 +123,7 @@ public class MasterServer {
                                 pilaCoin.setId(getID());
                                 assinaPila(pilaCoin);
                                 pilas.put(pilaCoin.getNumeroMagico(), pilaCoin);
-                                pilaDHTServer.publicaPilaCoin(pilaCoin);
+                                pilaDHTServer.publicaPilaCoin(pilaCoin, usuario);
                                 objetoTroca = criaObjetoTroca(chaveSessao, pilaCoin);
                                 out.writeObject(objetoTroca);
                                 s.close();

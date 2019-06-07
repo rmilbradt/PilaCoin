@@ -29,7 +29,7 @@ public class PilaDHTClient {
         System.out.println("[CLIENTE] Bootstraping...");
         future.awaitUninterruptibly();
         if (meuUsuario != null) {
-
+            setUsuario(meuUsuario);
         }
         System.out.println("[CLIENTE] Bootstrap feito.");
 

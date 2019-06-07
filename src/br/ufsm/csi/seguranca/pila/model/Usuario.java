@@ -1,13 +1,25 @@
 package br.ufsm.csi.seguranca.pila.model;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.security.PublicKey;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String id;
     private PublicKey chavePublica;
     private InetAddress endereco;
+    private Set<PilaCoin> meusPilas = new HashSet<>();
+
+    public Set<PilaCoin> getMeusPilas() {
+        return meusPilas;
+    }
+
+    public void setMeusPilas(Set<PilaCoin> meusPilas) {
+        this.meusPilas = meusPilas;
+    }
 
     public String getId() {
         return id;

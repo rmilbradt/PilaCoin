@@ -1,9 +1,7 @@
 package br.ufsm.csi.seguranca.server;
 
-import br.ufsm.csi.seguranca.pila.model.Mensagem;
-import br.ufsm.csi.seguranca.pila.model.MensagemFragmentada;
-import br.ufsm.csi.seguranca.pila.model.ObjetoTroca;
-import br.ufsm.csi.seguranca.pila.model.PilaCoin;
+import br.ufsm.csi.seguranca.pila.model.*;
+import br.ufsm.csi.seguranca.pilacoin.PilaDHTClient;
 import br.ufsm.csi.seguranca.pilacoin.PilaDHTServer;
 import br.ufsm.csi.seguranca.server.model.UsuarioServer;
 import br.ufsm.csi.seguranca.util.RSAUtil;
@@ -22,7 +20,7 @@ public class MasterServer {
 
     private long ID_PILA = 0;
 
-    public MasterServer() throws IOException {
+    public MasterServer() throws IOException, ClassNotFoundException {
     }
 
     private synchronized Long getID() {
@@ -32,8 +30,9 @@ public class MasterServer {
     private Map<InetAddress, UsuarioServer> usuarios = new HashMap<>();
     private Map<Long, PilaCoin> pilas = new HashMap<>();
     private PilaDHTServer pilaDHTServer = new PilaDHTServer();
+    private PilaDHTClient pilaDHTClient = new PilaDHTClient("127.0.0.1", 4001, null);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         new MasterServer().iniciaThreads();
     }
 
@@ -123,7 +122,7 @@ public class MasterServer {
                                 pilaCoin.setId(getID());
                                 assinaPila(pilaCoin);
                                 pilas.put(pilaCoin.getNumeroMagico(), pilaCoin);
-                                pilaDHTServer.publicaPilaCoin(pilaCoin);
+                                pilaDHTServer.publicaPilaCoin(pilaCoin, usuario);
                                 objetoTroca = criaObjetoTroca(chaveSessao, pilaCoin);
                                 out.writeObject(objetoTroca);
                                 s.close();
@@ -243,21 +242,30 @@ public class MasterServer {
                 Scanner scanner = new Scanner(System.in);
                 String s = scanner.nextLine();
                 if (s != null && s.trim().contains("s")) {
-                    System.out.println("USUÁRIO\t|\tENDERECO\t\t|\tDISCOVER\t|\tVALID. PILA\t|\tPILA_TRANSF");
+                    System.out.println("USUÁRIO\t|\t\tENDERECO\t\t|\t\tDISCOVER\t|\t\tVALID. PILA\t|\t\tPILA_TRANSF");
                     Collection<UsuarioServer> cusuarios = null;
                     synchronized (MasterServer.this) {
                         cusuarios = usuarios.values();
                     }
                     for (UsuarioServer usuario : cusuarios) {
                         System.out.print(usuario.getId());
-                        System.out.print("\t|\t");
+                        System.out.print("\t|\t\t");
                         System.out.print(usuario.getEndereco());
-                        System.out.print("\t|\t");
+                        System.out.print("\t|\t\t");
                         System.out.print(usuario.isMsgDiscoverOk());
-                        System.out.print("\t|\t");
+                        System.out.print("\t|\t\t");
                         System.out.print(usuario.isValidacaoPilaOk());
-                        System.out.print("\t\t|\t");
-                        System.out.println(usuario.isPilaTransfOk());
+                        System.out.print("\t\t|\t\t");
+                        try {
+                            Usuario usuarioDHT = pilaDHTServer.getUsuario(usuario.getId());
+                            Usuario usuarioClient = pilaDHTClient.getUsuario(usuario.getId());
+                            System.out.println(usuarioDHT.getMeusPilas().size() + "/" + usuarioClient.getMeusPilas().size());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                     System.out.println("---------------- FIM DA TABELA ----------------------");
                 }

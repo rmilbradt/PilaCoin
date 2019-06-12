@@ -1,6 +1,8 @@
 package br.ufsm.csi.seguranca.pilacoin;
 
 import br.ufsm.csi.seguranca.pila.model.PilaCoin;
+import br.ufsm.csi.seguranca.pila.model.Usuario;
+import net.tomp2p.dht.FutureGet;
 import net.tomp2p.dht.PeerBuilderDHT;
 import net.tomp2p.dht.PeerDHT;
 import net.tomp2p.futures.FutureBootstrap;
@@ -27,9 +29,32 @@ public class PilaDHTServer {
         future.awaitUninterruptibly();
     }
 
-    public void publicaPilaCoin(PilaCoin pilaCoin) throws IOException {
+    public void publicaPilaCoin(PilaCoin pilaCoin, Usuario dono) throws IOException, ClassNotFoundException {
+        Usuario usuario = getUsuario(pilaCoin.getIdCriador());
+        if (usuario != null) {
+            usuario.getMeusPilas().add(pilaCoin);
+            setUsuario(usuario);
+        } else {
+            dono.getMeusPilas().add(pilaCoin);
+            setUsuario(dono);
+        }
         peer.put(Number160.createHash(pilaCoin.getId())).data(new Data(pilaCoin)).start().awaitUninterruptibly();
         System.out.println("[SERVER] Publicou pila " + pilaCoin.getId() + ".");
+    }
+
+
+    public Usuario getUsuario(String idUsuario) throws IOException, ClassNotFoundException {
+        FutureGet futureGet = peer.get(Number160.createHash("usuario_" + idUsuario)).start();
+        futureGet.awaitUninterruptibly();
+        if (futureGet.isSuccess() && !futureGet.dataMap().values().isEmpty()) {
+            //System.out.println("[CLIENTE] chave=" + futureGet.dataMap().values().iterator().next().object().toString());
+            return (Usuario) futureGet.dataMap().values().iterator().next().object();
+        }
+        return null;
+    }
+
+    private void setUsuario(Usuario usuario) throws IOException, ClassNotFoundException {
+        peer.put(Number160.createHash("usuario_" + usuario.getId())).data(new Data(usuario)).start().awaitUninterruptibly();
     }
 
 }

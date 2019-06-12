@@ -2,13 +2,12 @@ package br.ufsm.csi.seguranca.server.model;
 
 import br.ufsm.csi.seguranca.pila.model.Usuario;
 
-import java.net.InetAddress;
-import java.security.PublicKey;
+import java.io.Serializable;
 
 /**
  * Created by cpol on 19/04/2018.
  */
-public class UsuarioServer extends Usuario {
+public class UsuarioServer extends Usuario implements Serializable {
 
     private boolean msgDiscoverOk;
     private boolean validacaoPilaOk;

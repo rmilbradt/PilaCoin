@@ -1,8 +1,8 @@
 package br.ufsm.csi.seguranca.pilacoin;
 
 import br.ufsm.csi.seguranca.pila.model.PilaCoin;
+import br.ufsm.csi.seguranca.pila.model.Transacao;
 import br.ufsm.csi.seguranca.pila.model.Usuario;
-import br.ufsm.csi.seguranca.server.model.UsuarioServer;
 import net.tomp2p.dht.FutureGet;
 import net.tomp2p.dht.PeerBuilderDHT;
 import net.tomp2p.dht.PeerDHT;
@@ -23,12 +23,12 @@ public class PilaDHTClient {
         new PilaDHTClient("127.0.0.1", 4001, null);
     }
 
-    private PilaDHTClient(String ipServer, int portServer, Usuario meuUsuario) throws IOException, ClassNotFoundException {
+    public PilaDHTClient(String ipServer, int portServer, Usuario meuUsuario) throws IOException, ClassNotFoundException {
         peer = new PeerBuilderDHT(new PeerBuilder(Number160.createHash(matricula)).ports(4000).start()).start();
         FutureBootstrap future = peer.peer().bootstrap().inetAddress(InetAddress.getByName(ipServer)).ports(portServer).start();
         System.out.println("[CLIENTE] Bootstraping...");
         future.awaitUninterruptibly();
-        if (meuUsuario != null) {
+        if (meuUsuario != null && getUsuario(meuUsuario.getId()) == null) {
             setUsuario(meuUsuario);
         }
         System.out.println("[CLIENTE] Bootstrap feito.");
@@ -39,13 +39,13 @@ public class PilaDHTClient {
         FutureGet futureGet = peer.get(Number160.createHash("usuario_" + idUsuario)).start();
         futureGet.awaitUninterruptibly();
         if (futureGet.isSuccess() && !futureGet.dataMap().values().isEmpty()) {
-            System.out.println("[CLIENTE] chave=" + futureGet.dataMap().values().iterator().next().object().toString());
-            return (UsuarioServer) futureGet.dataMap().values().iterator().next().object();
+            //System.out.println("[CLIENTE] chave=" + futureGet.dataMap().values().iterator().next().object().toString());
+            return (Usuario) futureGet.dataMap().values().iterator().next().object();
         }
         return null;
     }
 
-    public void setUsuario(Usuario usuario) throws IOException, ClassNotFoundException {
+    private void setUsuario(Usuario usuario) throws IOException, ClassNotFoundException {
         peer.put(Number160.createHash("usuario_" + usuario.getId())).data(new Data(usuario)).start().awaitUninterruptibly();
     }
 
@@ -59,8 +59,24 @@ public class PilaDHTClient {
         return null;
     }
 
-    public void setPilaCoin(PilaCoin pilaCoin) throws IOException {
+    public void setPilaCoin(PilaCoin pilaCoin) throws IOException, ClassNotFoundException {
         peer.put(Number160.createHash("pila_" + pilaCoin.getId())).data(new Data(pilaCoin)).start().awaitUninterruptibly();
+        if (pilaCoin.getTransacoes() != null && !pilaCoin.getTransacoes().isEmpty()) {
+            Usuario antigoDono = getUsuario(pilaCoin.getIdCriador());
+            if (antigoDono.getMeusPilas().remove(pilaCoin)) {
+                setUsuario(antigoDono);
+            }
+            for (Transacao t : pilaCoin.getTransacoes()) {
+                antigoDono = getUsuario(t.getIdNovoDono());
+                if (antigoDono.getMeusPilas().remove(pilaCoin)) {
+                    setUsuario(antigoDono);
+                }
+            }
+            Transacao ultimaTransacao = pilaCoin.getTransacoes().get(pilaCoin.getTransacoes().size() - 1);
+            Usuario novoDono = getUsuario(ultimaTransacao.getIdNovoDono());
+            novoDono.getMeusPilas().add(pilaCoin);
+            setUsuario(novoDono);
+        }
         System.out.println("[SERVER] Publicou novo pila " + pilaCoin.getId() + ".");
     }
 

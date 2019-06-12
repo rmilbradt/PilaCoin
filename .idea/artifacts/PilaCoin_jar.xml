@@ -1,8 +1,29 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="PilaCoin:jar">
-    <output-path>$PROJECT_DIR$/../bin</output-path>
+    <output-path>$PROJECT_DIR$/bin</output-path>
     <root id="archive" name="PilaCoin.jar">
       <element id="module-output" name="PilaCoin" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/gcm-server-1.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-simple-1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mapdb-1.0.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/netty-buffer-4.0.28.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/netty-common-4.0.28.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/netty-transport-4.0.28.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/slf4j-api-1.7.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-all-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-android-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-core-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-dht-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-nat-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-replication-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-storage-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/tomp2p-tracker-5.0-Beta8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/weupnp-0.1.2.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/Master_private_key.der" />
+      <element id="file-copy" path="$PROJECT_DIR$/Master_public_key.der" />
     </root>
   </artifact>
 </component>

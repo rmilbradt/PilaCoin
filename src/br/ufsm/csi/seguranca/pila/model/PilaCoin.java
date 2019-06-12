@@ -20,6 +20,21 @@ public class PilaCoin implements Serializable {
     private Long id;
     private List<Transacao> transacoes;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PilaCoin pilaCoin = (PilaCoin) o;
+
+        return idCriador != null ? idCriador.equals(pilaCoin.idCriador) : pilaCoin.idCriador == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return idCriador != null ? idCriador.hashCode() : 0;
+    }
+
     public List<Transacao> getTransacoes() {
         return transacoes;
     }

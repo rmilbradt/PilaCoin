@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class UsuarioServer extends Usuario implements Serializable {
 
+    private static final long serialVersionUID = 2L;
     private boolean msgDiscoverOk;
     private boolean validacaoPilaOk;
     private boolean pilaTransfOk;

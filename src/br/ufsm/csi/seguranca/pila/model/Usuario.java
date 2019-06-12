@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class Usuario implements Serializable {
 
+    private static final long serialVersionUID = 2L;
+
     private String id;
     private PublicKey chavePublica;
     private InetAddress endereco;

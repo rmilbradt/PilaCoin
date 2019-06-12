@@ -3,7 +3,6 @@ package br.ufsm.csi.seguranca.pilacoin;
 import br.ufsm.csi.seguranca.pila.model.PilaCoin;
 import br.ufsm.csi.seguranca.pila.model.Transacao;
 import br.ufsm.csi.seguranca.pila.model.Usuario;
-import br.ufsm.csi.seguranca.server.model.UsuarioServer;
 import net.tomp2p.dht.FutureGet;
 import net.tomp2p.dht.PeerBuilderDHT;
 import net.tomp2p.dht.PeerDHT;
@@ -60,7 +59,7 @@ public class PilaDHTClient {
         return null;
     }
 
-    public void setPilaCoin(PilaCoin pilaCoin) throws IOException {
+    public void setPilaCoin(PilaCoin pilaCoin) throws IOException, ClassNotFoundException {
         peer.put(Number160.createHash("pila_" + pilaCoin.getId())).data(new Data(pilaCoin)).start().awaitUninterruptibly();
         if (pilaCoin.getTransacoes() != null && !pilaCoin.getTransacoes().isEmpty()) {
             Usuario antigoDono = getUsuario(pilaCoin.getIdCriador());

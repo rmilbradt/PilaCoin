@@ -23,16 +23,16 @@ public class PilaCoin implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PilaCoin)) return false;
 
         PilaCoin pilaCoin = (PilaCoin) o;
 
-        return idCriador != null ? idCriador.equals(pilaCoin.idCriador) : pilaCoin.idCriador == null;
+        return getId() != null ? getId().equals(pilaCoin.getId()) : pilaCoin.getId() == null;
     }
 
     @Override
     public int hashCode() {
-        return idCriador != null ? idCriador.hashCode() : 0;
+        return getId() != null ? getId().hashCode() : 0;
     }
 
     public List<Transacao> getTransacoes() {
